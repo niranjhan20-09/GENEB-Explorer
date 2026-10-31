@@ -49,6 +49,15 @@ DATASETS = {
     "Human vs Worm": "species"
 }
 
+# Class meanings from the upstream Genomic Benchmarks task metadata.
+# The numeric codes follow the alphabetical class order in the source datasets.
+BIOLOGICAL_LABELS = {
+    "promoters": {0: "Non-promoter DNA sequence", 1: "Human non-TATA promoter sequence"},
+    "enhancers": {0: "Non-enhancer (background) sequence", 1: "Human enhancer sequence"},
+    "coding": {0: "Protein-coding sequence", 1: "Intergenic DNA sequence"},
+    "species": {0: "Human DNA (Homo sapiens)", 1: "Worm DNA (Caenorhabditis elegans)"},
+}
+
 MODEL_NAMES = [
     "Logistic Regression Original",
     "Logistic Regression Modified",
@@ -381,14 +390,24 @@ elif page == "Live DNA Predictor":
 
                 prediction = model.predict(features)[0]
 
-                st.success(
-                    f"Predicted class label: {prediction}"
-                )
+                # Preserve the original model output; only its displayed
+                # meaning changes. This does not relabel or retrain the model.
+                try:
+                    numeric_label = int(prediction)
+                except (ValueError, TypeError):
+                    numeric_label = None
 
-                st.caption(
-                    "Interpret the numeric label using the original "
-                    "dataset's label definitions. Predictions are "
-                    "experimental and are not biological diagnoses."
+                biological_label = BIOLOGICAL_LABELS[folder].get(numeric_label)
+                if biological_label is None:
+                    st.warning(f"Unrecognized model class: {prediction!s}")
+                else:
+                    st.success(f"Predicted classification: {biological_label}")
+                    st.caption(f"Model output: class {numeric_label}")
+
+                st.info(
+                    "This is a sequence-pattern classification based on a "
+                    "research dataset, not a validated biological or "
+                    "clinical diagnosis. Use task-relevant DNA sequences."
                 )
 
 # -----------------------------------------------
