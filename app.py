@@ -221,10 +221,10 @@ elif page == "Model Laboratory":
         st.write(modified)
     st.caption("Configurations and search grids verified in GENEB_ML_PROJECT.ipynb. Baseline corresponds "
                "to Original in saved artifacts. Search grids are not the same as selected fitted parameters.")
-    with st.expander("Verified selected parameters"):
-        st.write("Saved modified logistic regression artifacts: C=1 for promoters; C=0.1 for enhancers, coding and species. "
-                 "Notebook outputs: modified SVM has C=1, gamma=scale for coding and species. "
-                 "Selected SVM settings for the other two tasks were not retained in the inspected outputs.")
+    with st.expander("Verified fitted parameters"):
+        st.write("Saved modified logistic regression: C=1 for promoters; C=0.1 for enhancers, coding and species.")
+        st.write("Saved modified SVM: promoters C=10, gamma=scale; enhancers C=1, gamma=0.01; "
+                 "coding and species C=1, gamma=scale. These are the selected values, not just the search grid.")
     subset = df[df["Algorithm"] == algorithm]
     fig = px.bar(subset, y="Dataset", x="MCC", color="Configuration", barmode="group",
                  orientation="h", color_discrete_map=COLORS, text_auto=".3f", height=440,

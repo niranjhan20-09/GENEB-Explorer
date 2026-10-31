@@ -83,3 +83,12 @@ def test_predictor_and_state(app_path):
     app.button[1].click().run()
     assert not app.exception
     assert 'unavailable' in app.error[0].value
+
+
+def test_species_label_regression():
+    # Exact matches against semantic source labels showed that alphabetical
+    # naming reverses the GENEB encoding for this task.
+    import json
+    metadata = json.loads((ROOT / "training_metadata.json").read_text())
+    assert metadata["species"]["label_names"]["0"] == "Worm DNA (Caenorhabditis elegans)"
+    assert metadata["species"]["label_names"]["1"] == "Human DNA (Homo sapiens)"

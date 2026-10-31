@@ -28,8 +28,16 @@
     },
     "source_url": "https://huggingface.co/datasets/darlednik/geneb-tasks/tree/005717000cfffd8d506d1bdd9c5c3c458895d428/tasks/katarinagresova_Genomic_Benchmarks_human_nontata_promoters",
     "provenance": "Current source snapshot; the notebook did not pin its original download revision.",
-    "label_mapping_status": "preserved_from_main_pending_source_verification",
-    "configured_mapping_commit": "944b2a6a599b90d4351e0a0e71dba865dc4ce953"
+    "label_mapping_status": "source_verified",
+    "label_verification": {
+      "source": "https://zenodo.org/records/16605299/files/human_nontata_promoters_v0.zip",
+      "method": "Exact sequence matching against named negative/positive archive folders",
+      "matched_records": 36131,
+      "mapping": {
+        "negative": "0",
+        "positive": "1"
+      }
+    }
   },
   "enhancers": {
     "train": {
@@ -62,7 +70,15 @@
     "provenance": "Current source snapshot; the notebook did not pin its original download revision.",
     "label_mapping_source": "https://huggingface.co/datasets/katarinagresova/Genomic_Benchmarks_human_enhancers_cohn/discussions/1",
     "label_mapping_status": "source_verified",
-    "configured_mapping_commit": "944b2a6a599b90d4351e0a0e71dba865dc4ce953"
+    "label_verification": {
+      "source": "https://zenodo.org/records/16605299/files/human_enhancers_cohn_test.csv.gz",
+      "method": "Exact sequence join between source labels confirmed by the dataset owner and GENEB labels",
+      "unique_matched_sequences": 6948,
+      "mapping": {
+        "background": "0",
+        "enhancer": "1"
+      }
+    }
   },
   "coding": {
     "train": {
@@ -93,8 +109,16 @@
     },
     "source_url": "https://huggingface.co/datasets/darlednik/geneb-tasks/tree/005717000cfffd8d506d1bdd9c5c3c458895d428/tasks/katarinagresova_Genomic_Benchmarks_demo_coding_vs_intergenomic_seqs",
     "provenance": "Current source snapshot; the notebook did not pin its original download revision.",
-    "label_mapping_status": "preserved_from_main_pending_source_verification",
-    "configured_mapping_commit": "944b2a6a599b90d4351e0a0e71dba865dc4ce953"
+    "label_mapping_status": "source_verified",
+    "label_verification": {
+      "source": "https://zenodo.org/records/16605299/files/demo_coding_vs_intergenomic_seqs_test.csv.gz",
+      "method": "Exact sequence join between semantic upstream labels and numeric GENEB labels",
+      "unique_matched_sequences": 24997,
+      "mapping": {
+        "coding": "0",
+        "intergenomic": "1"
+      }
+    }
   },
   "species": {
     "train": {
@@ -120,12 +144,20 @@
     "task_id": "katarinagresova_Genomic_Benchmarks_demo_human_or_worm",
     "revision": "005717000cfffd8d506d1bdd9c5c3c458895d428",
     "label_names": {
-      "0": "Human DNA (Homo sapiens)",
-      "1": "Worm DNA (Caenorhabditis elegans)"
+      "0": "Worm DNA (Caenorhabditis elegans)",
+      "1": "Human DNA (Homo sapiens)"
     },
     "source_url": "https://huggingface.co/datasets/darlednik/geneb-tasks/tree/005717000cfffd8d506d1bdd9c5c3c458895d428/tasks/katarinagresova_Genomic_Benchmarks_demo_human_or_worm",
     "provenance": "Current source snapshot; the notebook did not pin its original download revision.",
-    "label_mapping_status": "preserved_from_main_pending_source_verification",
-    "configured_mapping_commit": "944b2a6a599b90d4351e0a0e71dba865dc4ce953"
+    "label_mapping_status": "source_verified",
+    "label_verification": {
+      "source": "https://zenodo.org/records/16605299/files/demo_human_or_worm_test.csv.gz",
+      "method": "Exact sequence join between semantic upstream labels and numeric GENEB labels",
+      "unique_matched_sequences": 24357,
+      "mapping": {
+        "worm": "0",
+        "human": "1"
+      }
+    }
   }
 }

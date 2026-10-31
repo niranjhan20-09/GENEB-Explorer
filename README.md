@@ -40,7 +40,17 @@ Reviewed the owner's `GENEB_ML_PROJECT.ipynb` and `GENEB_Website.ipynb` without 
 
 `demo_sequences.json` retains one current-source test row per numeric class per task, with its row index. They are benchmark examples, not proof of accuracy. Synthetic examples have no known biological class.
 
-The enhancer dataset owner's clarification identifies 0 as background and 1 as enhancer. That biological mapping is shown with its source. The existing main-branch class mappings added in commit `944b2a6` are preserved for the other tasks. The UI marks them as project-configured mappings pending independent source verification: neither the training notebook nor the inspected task CSVs documents the correspondence. Do not treat alphabetical folder order alone as proof; the upstream PyTorch loader enumerates directories without sorting.
+Biological mappings were checked by exact sequence matching between the downloaded GENEB task snapshot and the original upstream Zenodo release. Promoter sequences were matched to named negative/positive archive folders (36,131 records); coding and species sequences were joined to the semantic labels in the original test CSVs (24,997 and 24,357 unique matched sequences respectively). All matched sequences agreed on the mappings below. Enhancer labels were checked against the dataset owner's clarification and the original test CSV.
+
+| Task | Class 0 | Class 1 |
+| --- | --- | --- |
+| Promoters | Non-promoter | Non-TATA promoter |
+| Enhancers | Background | Enhancer |
+| Coding | Coding | Intergenic |
+| Species | Worm | Human |
+
+**The earlier main-branch change used the reverse species mapping. This update corrects the displayed meanings without changing numeric model outputs or retraining.** Do not infer encodings from alphabetical class names; the GENEB distribution's numeric labels must be checked against the actual source sequences. Per-task evidence and source URLs are recorded in `training_metadata.json`.
+
 
 ## Validation
 
@@ -49,14 +59,13 @@ python -m pip install pytest
 python -m pytest -q tests
 ```
 
-The 12 regression tests compare refactored features with the original deployed transformation, check invalid inputs and the worked example, exercise all five sections, all four laboratory choices and all 16 dataset/metric combinations, and check prediction state persistence and missing-artifact handling. UI tests use a synthetic dummy model, not project weights.
+The 13 regression tests compare refactored features with the original deployed transformation, check invalid inputs and the worked example, exercise all five sections, all four laboratory choices and all 16 dataset/metric combinations, and check prediction state persistence and missing-artifact handling. UI tests use a synthetic dummy model, not project weights.
 
-Separately smoke-tested all eight real logistic-regression artifacts under scikit-learn 1.6.1 on benchmark example sequences. These are functionality checks, not a new accuracy evaluation. Random forest, SVM and MLP artifact inference and visual layout still require a separate preview deployment before merging.
+Separately smoke-tested all 32 real saved artifacts under scikit-learn 1.6.1 on two benchmark example sequences each (64 predictions). These are functionality checks, not a new accuracy evaluation; some predictions differ from example labels, as expected for imperfect models. The cloud browser could not connect to the local Streamlit preview, so browser visual QA remains a deployment check.
 
 ## Remaining checks before publishing
 
-- Independently verify the preserved main-branch biological label mappings for promoters, coding and species.
-- Visually review a separate Streamlit preview and retest the remaining real model families.
+- Visually review a Streamlit preview or verify the deployed changes after authorized publication.
 - Confirm exact historical data revisions and hardware if recoverable; never claim the current source hash is the historical training hash.
 - Add confusion matrices only from actual saved true/predicted labels. Aggregate scores cannot reconstruct them.
 - Consider multiple seeds, convergence checks, ablations and a source-split similarity audit as future experiments.
